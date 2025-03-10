@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:calorie_tracker/models/meal.dart';
 import 'package:calorie_tracker/util.dart';
 import 'package:flutter/material.dart';
@@ -134,7 +132,6 @@ class _MealFormState extends State<MealForm> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final bottomInset = MediaQuery.of(context).viewInsets.bottom;
 
     return Container(
@@ -148,7 +145,7 @@ class _MealFormState extends State<MealForm> {
               onChanged: (value) => setState(() => mealDetails = value),
               maxLines: 3,
               decoration: const InputDecoration(
-                label: Text("Введите описание трапезы"),
+                label: Text("enter meal description"),
               ),
             ),
             TextField(
@@ -160,7 +157,7 @@ class _MealFormState extends State<MealForm> {
               ],
               onChanged: (value) => setState(() => selectedCaloriesQuantity = int.parse(value)),
               decoration: const InputDecoration(
-                label: Text("Введите количество калорий"),
+                label: Text("enter calories amount"),
               ),
             ),
             Row(
@@ -171,7 +168,7 @@ class _MealFormState extends State<MealForm> {
                     readOnly: true,
                     controller: selectedConsumedOnDateController,
                     decoration: InputDecoration(
-                      label: Text('Started sleeping on'),
+                      label: Text('enter consumption date'),
                     ),
                   ),
                 ),
@@ -183,7 +180,7 @@ class _MealFormState extends State<MealForm> {
                     readOnly: true,
                     controller: selectedConsumedOnTimeController,
                     decoration: InputDecoration(
-                      label: Text('At'),
+                      label: Text('enter consumption time'),
                     ),
                   ),
                 ),
