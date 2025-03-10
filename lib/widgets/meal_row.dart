@@ -32,7 +32,7 @@ class MealRow extends StatelessWidget {
                 ),
                 const Spacer(),
                 Text(
-                  meal.caloriesQuantity.toString(),
+                  "${meal.caloriesQuantity.toString()} cal",
                   style: Theme.of(context)
                       .textTheme
                       .headlineSmall!

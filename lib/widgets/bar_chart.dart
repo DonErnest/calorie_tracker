@@ -66,7 +66,7 @@ class _BarChart extends StatelessWidget {
         return BarTooltipItem(
           (rod.toY.round() * 1000).toString(),
           const TextStyle(
-            color: Color.fromRGBO(35, 87, 137, 1.0),
+            color: Color.fromRGBO(193, 41, 46, 1.0),
             fontWeight: FontWeight.bold,
           ),
         );
@@ -76,7 +76,7 @@ class _BarChart extends StatelessWidget {
 
   Widget getTitles(double value, TitleMeta meta) {
     final style = TextStyle(
-      color: Color.fromRGBO(35, 87, 137, 1.0),
+      color: Color.fromRGBO(193, 41, 46, 1.0),
       fontWeight: FontWeight.bold,
       fontSize: 14,
     );
@@ -106,7 +106,7 @@ class _BarChart extends StatelessWidget {
 
   LinearGradient get _barsGradient {
     return LinearGradient(
-      colors: [Color.fromRGBO(35, 87, 137, 1), Color.fromRGBO(0, 195, 137, 1)],
+      colors: [Color.fromRGBO(193, 41, 46, 1), Color.fromRGBO(250, 170, 86, 1)],
       begin: Alignment.bottomCenter,
       end: Alignment.topCenter,
     );

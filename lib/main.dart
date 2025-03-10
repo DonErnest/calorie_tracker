@@ -1,3 +1,5 @@
+import 'package:calorie_tracker/theme/dark_theme.dart';
+import 'package:calorie_tracker/theme/light_theme.dart';
 import 'package:flutter/material.dart';
 
 import 'tracker.dart';
@@ -7,10 +9,8 @@ void main() {
     MaterialApp(
       title: "Dream Diary Application",
       home: CaloriesTracker(),
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue.shade900),
-        useMaterial3: true,
-      )
+      theme: lightTheme,
+      darkTheme: darkTheme,
     ),
   );
 }

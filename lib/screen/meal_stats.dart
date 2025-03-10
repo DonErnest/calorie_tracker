@@ -34,7 +34,7 @@ class MealStatsScreen extends StatelessWidget {
             ).textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 50),
-          LineBar(),
+          RatioBar(maxPerDay: maxCalories, currentAmount: caloriesPerDate(DateTime.now(), userMeals),),
           SizedBox(child: MealsBarChart(meals: userMeals)),
         ],
       ),

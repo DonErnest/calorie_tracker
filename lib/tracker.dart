@@ -109,7 +109,7 @@ class _CaloriesTrackerState extends State<CaloriesTracker> {
         appBarActions: [
           IconButton(
             onPressed: openAddMealSheet,
-            icon: const Icon(Icons.add),
+            icon: const Icon(Icons.fastfood),
           )
         ],
         screen: MealStatsScreen(
@@ -128,7 +128,7 @@ class _CaloriesTrackerState extends State<CaloriesTracker> {
         appBarActions: [
           IconButton(
             onPressed: openAddMealSheet,
-            icon: const Icon(Icons.add),
+            icon: const Icon(Icons.fastfood),
           )
         ],
         screen: MainScreen(

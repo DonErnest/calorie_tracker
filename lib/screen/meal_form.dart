@@ -38,8 +38,12 @@ class _MealFormState extends State<MealForm> {
       detailsController.text = existingSleep.details;
       mealDetails = existingSleep.details;
 
+      selectedCaloriesQuantity = existingSleep.caloriesQuantity;
+      caloriesQuantityController.text = existingSleep.caloriesQuantity.toString();
+
       selectedConsumedOnDateController.text = formatDate(existingSleep.consumedOn);
       selectedConsumedOnDate = existingSleep.consumedOn;
+
       selectedConsumedOnTimeController.text =
           formatTime(TimeOfDay.fromDateTime(existingSleep.consumedOn));
       selectedConsumedOnTime = TimeOfDay.fromDateTime(existingSleep.consumedOn);
