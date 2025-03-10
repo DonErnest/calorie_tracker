@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:calorie_tracker/util.dart';
 import 'package:uuid/uuid.dart';
-
 
 const uuid = Uuid();
 
@@ -19,38 +18,14 @@ class Meal {
   }):  id = id ?? uuid.v4();
 
   String formatDateDisplay(DateTime date) {
-    return '${date.day}.${date.month}.${date.year} ${date.hour}:${date.minute}';
+    return formatDateTime(date);
   }
 
   String get consumedOnDisplay => formatDateDisplay(consumedOn);
 }
 
-String _zeroPad(int dateTimeValue) {
-  if (dateTimeValue < 10) {
-    return '0$dateTimeValue';
-  }
-  return dateTimeValue.toString();
-}
 
-String formatDate(DateTime dateTime) {
-  final day = _zeroPad(dateTime.day);
-  final month = _zeroPad(dateTime.month);
-  final year = dateTime.year;
-  return '$day.$month.$year';
-}
-
-String formatTime(TimeOfDay dateTime) {
-  final hour = _zeroPad(dateTime.hour);
-  final minute = _zeroPad(dateTime.minute);
-
-  return '$hour:$minute';
-}
-
-String formatDateTime(DateTime dateTime) {
-  final day = _zeroPad(dateTime.day);
-  final month = _zeroPad(dateTime.month);
-  final year = dateTime.year;
-  final hour = _zeroPad(dateTime.hour);
-  final minute = _zeroPad(dateTime.minute);
-  return '$day.$month.$year $hour:$minute';
+int caloriesPerDate(DateTime date, List<Meal> meals) {
+  Iterable<Meal> filteredCalories = meals.where((meal) => meal.consumedOn.day == date.day && meal.consumedOn.month == date.month && meal.consumedOn.year == date.year);
+  return filteredCalories.fold<int>(0, (prev, next) => prev + next.caloriesQuantity);
 }
