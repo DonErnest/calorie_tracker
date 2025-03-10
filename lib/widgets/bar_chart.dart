@@ -11,13 +11,16 @@ class _BarChart extends StatelessWidget {
     lastWeek = getLastWeekDates;
   }
 
-  int getCompletedCountByWeekDay(int weekDay) {
+  double getCompletedCountByWeekDay(int weekDay) {
     var today = DateTime.now();
     return mealsForStatistics
-        .where((meal) =>
-    meal.consumedOn.isAfter(today.subtract(Duration(days: 7))) &&
-        meal.consumedOn.weekday == weekDay)
-        .length;
+            .where(
+              (meal) =>
+                  meal.consumedOn.isAfter(today.subtract(Duration(days: 7))) &&
+                  meal.consumedOn.weekday == weekDay,
+            )
+            .fold(0, (prev, next) => prev + next.caloriesQuantity) /
+        1000;
   }
 
   List<DateTime> get getLastWeekDates {
@@ -36,40 +39,40 @@ class _BarChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return BarChart(
       BarChartData(
-          barTouchData: barTouchData,
-          titlesData: titlesData,
-          borderData: borderData,
-          barGroups: barGroups,
-          gridData: const FlGridData(show: false),
-          alignment: BarChartAlignment.spaceAround,
-          maxY: 20,
-          // backgroundColor: Color.fromRGBO(28, 36, 57, 1)
+        barTouchData: barTouchData,
+        titlesData: titlesData,
+        borderData: borderData,
+        barGroups: barGroups,
+        gridData: const FlGridData(show: false),
+        alignment: BarChartAlignment.spaceAround,
+        maxY: 10,
+        // backgroundColor: Color.fromRGBO(28, 36, 57, 1)
       ),
     );
   }
 
   BarTouchData get barTouchData => BarTouchData(
-        enabled: false,
-        touchTooltipData: BarTouchTooltipData(
-          getTooltipColor: (group) => Colors.transparent,
-          tooltipPadding: EdgeInsets.zero,
-          tooltipMargin: 8,
-          getTooltipItem: (
-            BarChartGroupData group,
-            int groupIndex,
-            BarChartRodData rod,
-            int rodIndex,
-          ) {
-            return BarTooltipItem(
-              rod.toY.round().toString(),
-              const TextStyle(
-                color: Color.fromRGBO(35, 87, 137, 1.0),
-                fontWeight: FontWeight.bold,
-              ),
-            );
-          },
-        ),
-      );
+    enabled: false,
+    touchTooltipData: BarTouchTooltipData(
+      getTooltipColor: (group) => Colors.transparent,
+      tooltipPadding: EdgeInsets.zero,
+      tooltipMargin: 8,
+      getTooltipItem: (
+        BarChartGroupData group,
+        int groupIndex,
+        BarChartRodData rod,
+        int rodIndex,
+      ) {
+        return BarTooltipItem(
+          (rod.toY.round() * 1000).toString(),
+          const TextStyle(
+            color: Color.fromRGBO(35, 87, 137, 1.0),
+            fontWeight: FontWeight.bold,
+          ),
+        );
+      },
+    ),
+  );
 
   Widget getTitles(double value, TitleMeta meta) {
     final style = TextStyle(
@@ -86,35 +89,24 @@ class _BarChart extends StatelessWidget {
   }
 
   FlTitlesData get titlesData => FlTitlesData(
-        show: true,
-        bottomTitles: AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: true,
-            reservedSize: 30,
-            getTitlesWidget: getTitles,
-          ),
-        ),
-        leftTitles: const AxisTitles(
-          sideTitles: SideTitles(showTitles: false),
-        ),
-        topTitles: const AxisTitles(
-          sideTitles: SideTitles(showTitles: false),
-        ),
-        rightTitles: const AxisTitles(
-          sideTitles: SideTitles(showTitles: false),
-        ),
-      );
+    show: true,
+    bottomTitles: AxisTitles(
+      sideTitles: SideTitles(
+        showTitles: true,
+        reservedSize: 30,
+        getTitlesWidget: getTitles,
+      ),
+    ),
+    leftTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+    topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+    rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+  );
 
-  FlBorderData get borderData => FlBorderData(
-        show: false,
-      );
+  FlBorderData get borderData => FlBorderData(show: false);
 
   LinearGradient get _barsGradient {
     return LinearGradient(
-      colors: [
-        Color.fromRGBO(35, 87, 137, 1),
-        Color.fromRGBO(0, 195, 137, 1),
-      ],
+      colors: [Color.fromRGBO(35, 87, 137, 1), Color.fromRGBO(0, 195, 137, 1)],
       begin: Alignment.bottomCenter,
       end: Alignment.topCenter,
     );
@@ -122,16 +114,18 @@ class _BarChart extends StatelessWidget {
 
   List<BarChartGroupData> get barGroups {
     return lastWeek
-        .map((weekDay) => BarChartGroupData(
-              x: weekDay.weekday,
-              barRods: [
-                BarChartRodData(
-                  toY: getCompletedCountByWeekDay(weekDay.weekday).toDouble(),
-                  gradient: _barsGradient,
-                )
-              ],
-              showingTooltipIndicators: [0],
-            ))
+        .map(
+          (weekDay) => BarChartGroupData(
+            x: weekDay.weekday,
+            barRods: [
+              BarChartRodData(
+                toY: getCompletedCountByWeekDay(weekDay.weekday).toDouble(),
+                gradient: _barsGradient,
+              ),
+            ],
+            showingTooltipIndicators: [0],
+          ),
+        )
         .toList();
   }
 }
@@ -148,9 +142,6 @@ class MealsBarChart extends StatefulWidget {
 class MealsBarChartState extends State<MealsBarChart> {
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1.6,
-      child: _BarChart(widget.meals),
-    );
+    return AspectRatio(aspectRatio: 1.6, child: _BarChart(widget.meals));
   }
 }

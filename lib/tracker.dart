@@ -5,6 +5,7 @@ import 'package:calorie_tracker/screen/meal_history.dart';
 import 'package:calorie_tracker/screen/meal_detail.dart';
 import 'package:calorie_tracker/screen/meal_form.dart';
 import 'package:calorie_tracker/screen/meal_stats.dart';
+import 'package:calorie_tracker/screen/settings.dart';
 import 'package:flutter/material.dart';
 
 class CaloriesTracker extends StatefulWidget {
@@ -88,6 +89,13 @@ class _CaloriesTrackerState extends State<CaloriesTracker> {
     );
   }
 
+  void updateMaxCalories(int newMax) {
+    setState(() {
+      maxCaloriesPerDay = newMax;
+    });
+  }
+
+
   List<Destination> get destinations {
     return [
       Destination(
@@ -128,6 +136,20 @@ class _CaloriesTrackerState extends State<CaloriesTracker> {
           onRemove: removeMeal,
           onBrowse: browseMeal,
           onEdit: openEditMealSheet,
+        ),
+      ),
+      Destination(
+        screenTitle: Text(
+          'Settings',
+          style: Theme.of(context).textTheme.headlineLarge,
+        ),
+        navLabel: 'Settings',
+        icon: Icons.settings_outlined,
+        selectedIcon: Icons.settings,
+        appBarActions: [],
+        screen: SettingsScreen(
+          onMaxUpdate: updateMaxCalories,
+          currentMaxCalories: maxCaloriesPerDay,
         ),
       ),
     ];

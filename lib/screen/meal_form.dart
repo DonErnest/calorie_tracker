@@ -16,8 +16,6 @@ class MealForm extends StatefulWidget {
 }
 
 class _MealFormState extends State<MealForm> {
-  bool timeError = false;
-
   var mealDetails = "";
   final detailsController = TextEditingController();
 
